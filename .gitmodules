@@ -1,3 +1,6 @@
 [submodule "src/java-openjdk-boshrelease"]
 	path = src/java-openjdk-boshrelease
 	url = https://github.com/Orange-OpenSource/java-openjdk-boshrelease.git
+[submodule "src/connectors/spring-data-crate"]
+	path = src/connectors/spring-data-crate
+	url = https://github.com/crate/spring-data-crate
