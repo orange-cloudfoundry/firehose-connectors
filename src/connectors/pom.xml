@@ -9,5 +9,6 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>crate-nozzle</module>
+		<module>influxdb-nozzle</module>
 	</modules>
 </project>
