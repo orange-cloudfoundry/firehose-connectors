@@ -66,15 +66,5 @@
 	</dependencyManagement>
 
 
-	<repositories>
-		<repository>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<id>central</id>
-			<name>bintray</name>
-			<url>http://dl.bintray.com/crate/crate</url>
-		</repository>
-	</repositories>
 
 </project>
