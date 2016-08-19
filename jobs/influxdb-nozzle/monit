@@ -1,0 +1,5 @@
+check process influxdb-nozzle
+  with pidfile /var/vcap/sys/run/influxdb-nozzle/influxdb-nozzle.pid
+  start program "/var/vcap/jobs/influxdb-nozzle/bin/monit_debugger influxdb-nozzle_ctl '/var/vcap/jobs/influxdb-nozzle/bin/ctl start'"
+  stop program "/var/vcap/jobs/influxdb-nozzle/bin/monit_debugger influxdb-nozzle_ctl '/var/vcap/jobs/influxdb-nozzle/bin/ctl stop'"
+  group vcap
