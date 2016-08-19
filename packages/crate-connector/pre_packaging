@@ -1,0 +1,13 @@
+set -e
+
+. common/setup-java-prepackaging.sh
+
+cd ${BUILD_DIR}/connectors
+./mvnw -B -e clean install -DskipTests=true
+mv connectors/crate-connector/target/crate-connector-0.0.1-SNAPSHOT.jar  ${BUILD_DIR}/crate-connector.jar
+
+cd ${BUILD_DIR}
+rm -rf connectors
+
+cleanup_java
+
