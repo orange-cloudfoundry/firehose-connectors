@@ -1,4 +1,7 @@
 ---
 name: crate-connector
 dependencies: []
-files: []
+files:
+- connectors/**/*
+- openjdk/*
+- common/setup-java-prepackaging.sh
