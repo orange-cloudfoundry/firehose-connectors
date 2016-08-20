@@ -18,8 +18,10 @@ case $1 in
     echo $$ > $PIDFILE
 
 	exec chpst -u vcap:vcap  $JAVA_HOME/bin/java  \
-               -server -XX:+UseG1GC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=25 -Xms128M -Xmx512M -Dlogback.configurationFile=$JOB_DIR/config/logback.xml \
+               -server -XX:+UseG1GC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=25 -Xms128M -Xmx512M -Dlogging.config=$JOB_DIR/config/logback.xml \
+               -Djava.security.egd=file:/dev/./urandom \
                -jar /var/vcap/packages/influxdb-connector/influxdb-nozzle.jar  \
+               --spring.config.location=$JOB_DIR/config/application.yml \
                 >>$LOG_DIR/$JOB_NAME.log 2>&1
 
 

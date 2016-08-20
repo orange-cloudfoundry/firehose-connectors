@@ -2,9 +2,6 @@
 <configuration scan="true">
 
 	<!-- refer to http://logback.qos.ch/manual/appenders.html -->
-
-
-
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<pattern>
@@ -14,10 +11,9 @@
 	</appender>
 
 	<logger name="com.orange.oss.cloudfoundry" level="${config.logger.level}" />
-	<logger name="jclouds.wire" level="INFO" />	
+        <logger name="org.springframework" level="INFO" />
 
 	<root level="WARN">
-		<appender-ref ref="FILE" />
 		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>

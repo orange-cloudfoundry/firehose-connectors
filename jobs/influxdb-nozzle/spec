@@ -14,6 +14,15 @@ templates:
   config/logback.xml.erb: config/logback.xml
 
 properties:
+  admin.user:
+    description:
+      "actuator user"
+    default: admin
+
+  admin.password:
+    description:
+      "actuator password"
+
   zipkin.enabled:
     description:
       "should cpi activate zipkin sleuth http tracing"
