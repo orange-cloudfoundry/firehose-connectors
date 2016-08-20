@@ -1,0 +1,23 @@
+management:
+  context-path: /admin
+  
+logging:
+  level:
+    org.springframework: INFO
+    org.springframework.security: INFO
+spring:
+  main:
+    show-banner: true
+  pidfile: ./target/application.pid
+
+  sleuth:
+    sampler:
+      percentage: 1.0
+  zipkin:
+    enabled: true
+    base-url: http://zipkin-server.xx.com 
+
+
+admin:
+  user: admin
+  password: xxxx    
