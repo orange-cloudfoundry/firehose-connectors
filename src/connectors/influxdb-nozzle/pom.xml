@@ -42,6 +42,11 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>com.github.cloudfoundry-community</groupId>
+			<artifactId>snotel-spring-boot-starter</artifactId>
+			<version>0.4</version>
+		</dependency>
 		
 		<dependency>
 		      <groupId>org.influxdb</groupId>

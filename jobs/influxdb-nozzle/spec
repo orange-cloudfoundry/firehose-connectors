@@ -38,4 +38,20 @@ properties:
       "remote zipkin collecter server url"
     example:  http://xx.xx.xx
     default: http://127.0.0.1:9441
+
+  firehose.url:
+    description:
+      "firehose url"
+  
+  firehose.bearer:
+    description:
+      "oauth bearer for firehose client"
+  
+  firehose.skipTlsValidation:
+    description:
+      "should skip TLS validation to access firehose"
+    default: false
+  
+  
+  
   

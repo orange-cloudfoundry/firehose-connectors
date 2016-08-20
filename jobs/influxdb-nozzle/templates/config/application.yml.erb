@@ -16,3 +16,10 @@ spring:
 admin:
   user:  <%= p('admin.user') %>
   password: <%= p('admin.password') %>     
+
+  
+firehose:
+  url: <%= p('firehose.url') %>
+  bearer: <%= p('firehose.bearer') %>
+  skipTlsValidation: <%= p('firehose.skipTlsValidation') %>
+  
