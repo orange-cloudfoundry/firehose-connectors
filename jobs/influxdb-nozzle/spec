@@ -1,7 +1,6 @@
 ---
 name: influxdb-nozzle
 packages:
-packages:
 - openjdk
 - influxdb-connector
 
@@ -11,8 +10,8 @@ templates:
   data/properties.sh.erb: data/properties.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
-  application.yml.erb: config/application.yml
-  logback.xml.erb: config/logback.xml
+  config/application.yml.erb: config/application.yml
+  config/logback.xml.erb: config/logback.xml
 
 properties:
   zipkin.enabled:
