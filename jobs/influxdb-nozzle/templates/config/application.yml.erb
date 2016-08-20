@@ -1,0 +1,14 @@
+---
+logging:
+  level: DEBUG
+
+management:
+  context-path: /admin    
+
+spring:
+  sleuth:
+    sampler:
+      percentage: <%= p('zipkin.sampler-percentage') %>
+  zipkin:
+    enabled: <%= p('zipkin.enabled') %>
+    base-url: <%= p('zipkin.base-url') %> 

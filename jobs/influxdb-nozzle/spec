@@ -1,9 +1,33 @@
 ---
 name: influxdb-nozzle
-packages: []
+packages:
+packages:
+- openjdk
+- influxdb-connector
+
 templates:
   bin/ctl: bin/ctl
   bin/monit_debugger: bin/monit_debugger
   data/properties.sh.erb: data/properties.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
+  application.yml.erb: config/application.yml
+  logback.xml.erb: config/logback.xml
+
+properties:
+  zipkin.enabled:
+    description:
+      "should cpi activate zipkin sleuth http tracing"
+    default: false
+
+  zipkin.sampler-percentage:
+    description:
+      "zipkin sleuth percentage sampling. 1.0 is all, 0.1 is one tenth"
+    default: 0.1
+
+  zipkin.base-url:
+    description:
+      "remote zipkin collecter server url"
+    example:  http://xx.xx.xx
+    default: http://127.0.0.1:9441
+  
