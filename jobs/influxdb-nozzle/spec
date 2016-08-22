@@ -39,19 +39,17 @@ properties:
     example:  http://xx.xx.xx
     default: http://127.0.0.1:9441
 
-  firehose.url:
+  cf.firehose.endpoint:
     description:
       "firehose url"
   
-  firehose.bearer:
+  cf.firehose.authToken:
     description:
       "oauth bearer for firehose client"
   
-  firehose.skipTlsValidation:
+  cf.firehose.skipTlsValidation:
     description:
       "should skip TLS validation to access firehose"
     default: false
-  
-  
   
   
