@@ -1,13 +1,15 @@
 package com.orange.oss.cloudfoundry.nozzle.config;
 
+import org.cloudfoundry.dropsonde.events.Envelope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.util.Assert;
 
 import cf.dropsonde.firehose.Firehose;
-import cf.dropsonde.firehose.FirehoseBuilder;
+import rx.Observable;
 
 @Configuration
 public class NozzleListener {
@@ -17,30 +19,17 @@ public class NozzleListener {
 	@Autowired
 	Firehose firehose;
 
-	// public NozzleListener() {
-	// try (final Firehose firehose = FirehoseBuilder.create(this.firehoseUrl,
-	// this.firehoseBearer)
-	// .skipTlsValidation(this.firehoseSkipTlsValidation).build()) {
-	//
-	// logger.info("url:{}", this.firehoseUrl);
-	// logger.info("bearer:" + this.firehoseBearer);
-	// logger.info("skipTls:" + this.firehoseSkipTlsValidation);
-	//
-	// firehose.open().toBlocking().forEach(envelope -> {
-	// logger.info(envelope.toString());
-	// });
-	// }
-	// }
-
 	public NozzleListener(){
 	}
 	
-	
+	@Scheduled(fixedDelay=5000)
 	public void startNozzle(){
 		logger.info("start nozzle");
-		firehose
-        .open()
-        .toBlocking()
+
+		Observable<Envelope> observable = firehose.open();
+		//Assert.isTrue(firehose.isConnected(),"not connected to Firehose");
+		
+        observable.toBlocking()
         .forEach(envelope -> {logger.info(envelope.toString());});
 	}
 	
