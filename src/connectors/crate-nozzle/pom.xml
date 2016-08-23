@@ -30,7 +30,7 @@
 		<dependency>
 			<groupId>com.orange.oss.cloudfoundry.nozzle</groupId>
 			<artifactId>base-nozzle</artifactId>
-			<version>0.1-SNAPSHOT</version>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	
 		<dependency>
