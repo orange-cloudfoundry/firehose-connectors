@@ -52,4 +52,19 @@ properties:
       "should skip TLS validation to access firehose"
     default: false
   
+  influxdb.host:
+      description:
+        "influx db host"
+  influxdb.port:
+      description:
+        "influx db port"
+  influxdb.database:
+      description:
+        "influx database"
+  influxdb.username:
+      description:
+        "influx username"
+  influxdb.password:  
+      description:
+        "influx password"
   
