@@ -28,6 +28,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.orange.oss.cloudfoundry.nozzle</groupId>
+			<artifactId>base-nozzle</artifactId>
+			<version>0.1-SNAPSHOT</version>
+		</dependency>
+	
+		<dependency>
 			<groupId>com.github.cloudfoundry-community</groupId>
 			<artifactId>snotel-spring-boot-starter</artifactId>
 			<version>0.4</version>

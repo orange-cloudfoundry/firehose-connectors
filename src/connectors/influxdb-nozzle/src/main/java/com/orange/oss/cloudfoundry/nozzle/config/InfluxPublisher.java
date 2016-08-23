@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.arjuna.ats.internal.arjuna.objectstore.jdbc.drivers.oracle_driver;
+
 @Component
 public class InfluxPublisher implements Publisher {
 	
@@ -70,15 +72,16 @@ public class InfluxPublisher implements Publisher {
 		                .retentionPolicy("default")
 		                .consistency(ConsistencyLevel.ALL)
 		                .build();
-		Point point1 = Point.measurement("firehose")
+		Point point = Point.measurement("firehose")
 		                    .time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
+		                    .addField("origin", env.origin)
 		                    .addField("deployment", env.deployment)
 		                    .addField("job", env.job)
 		                    .addField("index", env.index)
 		                    .addField("ip", env.ip)
 		                    .addField("timestamp", env.timestamp)
 		                    .build();
-		batchPoints.point(point1);
+		batchPoints.point(point);
 		influxDB.write(batchPoints);
 		
 	}

@@ -8,8 +8,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
-		<module>crate-nozzle</module>
+		<module>base-nozzle</module>
+<!-- 		<module>crate-nozzle</module> -->
 		<module>influxdb-nozzle</module>
-                <module>spring-data-crate</module>
+<!--         <module>spring-data-crate</module> -->
 	</modules>
 </project>
