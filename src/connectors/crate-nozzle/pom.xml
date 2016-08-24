@@ -22,8 +22,11 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		<crate-client.version>0.55.4</crate-client.version>		
 	</properties>
 
+
+	
 
 	<dependencies>
 		<dependency>
@@ -33,16 +36,13 @@
 		</dependency>
 	
 		<dependency>
-			<groupId>com.github.cloudfoundry-community</groupId>
-			<artifactId>snotel-spring-boot-starter</artifactId>
-			<version>0.4</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
 
 		
+		
+        		
 		<dependency>
 		    <groupId>org.springframework.data</groupId>
 		    <artifactId>spring-data-crate</artifactId>
@@ -68,6 +68,13 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			
+		<dependency>
+            <groupId>io.crate</groupId>
+            <artifactId>crate-client</artifactId>
+            <version>${crate-client.version}</version>
+        </dependency>
+			
 		</dependencies>
 	</dependencyManagement>
 

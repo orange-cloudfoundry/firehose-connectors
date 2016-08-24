@@ -1,5 +1,7 @@
 package com.orange.oss.cloudfoundry.nozzle.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +16,8 @@ import io.crate.client.CrateClient;
 @EnableCrateRepositories
 public class CrateSpringDataConfig extends AbstractCrateConfiguration {
 
+	private static Logger logger=LoggerFactory.getLogger(CrateSpringDataConfig.class.getName());
+	
 	@Value("${crate.host}")
 	private String host;
 
@@ -22,6 +26,7 @@ public class CrateSpringDataConfig extends AbstractCrateConfiguration {
 
 	@Override
 	public CrateClient crateClient() {
+		logger.info("crate target on host {}, port {}",this.host,this.port);
 		return new CrateClient(this.host + ":" + this.port);
 	}
 
