@@ -58,9 +58,9 @@ public class CratePublisher implements Publisher {
 		e.setIp(env.ip);
 		e.setJob(env.job);
 
-		e.setMetricName(env.valueMetric.name);
-		e.setMetricUnit(env.valueMetric.unit);
-		e.setMetricValue(env.valueMetric.value);
+//		e.setMetricName(env.valueMetric.name);
+//		e.setMetricUnit(env.valueMetric.unit);
+//		e.setMetricValue(env.valueMetric.value);
 		e.setOrigin(env.origin);
 		e.setTimestamp(env.timestamp);
 		
