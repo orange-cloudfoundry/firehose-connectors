@@ -1,0 +1,5 @@
+check process crate-nozzle
+  with pidfile /var/vcap/sys/run/crate-nozzle/crate-nozzle.pid
+  start program "/var/vcap/jobs/crate-nozzle/bin/monit_debugger crate-nozzle_ctl '/var/vcap/jobs/crate-nozzle/bin/ctl start'"
+  stop program "/var/vcap/jobs/crate-nozzle/bin/monit_debugger crate-nozzle_ctl '/var/vcap/jobs/crate-nozzle/bin/ctl stop'"
+  group vcap

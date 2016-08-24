@@ -1,0 +1,70 @@
+---
+name: crate-nozzle
+packages:
+- openjdk
+- crate-connector
+
+templates:
+  bin/ctl: bin/ctl
+  bin/monit_debugger: bin/monit_debugger
+  data/properties.sh.erb: data/properties.sh
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+  config/application.yml.erb: config/application.yml
+  config/logback.xml.erb: config/logback.xml
+
+properties:
+  admin.user:
+    description:
+      "actuator user"
+    default: admin
+
+  admin.password:
+    description:
+      "actuator password"
+
+  zipkin.enabled:
+    description:
+      "should cpi activate zipkin sleuth http tracing"
+    default: false
+
+  zipkin.sampler-percentage:
+    description:
+      "zipkin sleuth percentage sampling. 1.0 is all, 0.1 is one tenth"
+    default: 0.1
+
+  zipkin.base-url:
+    description:
+      "remote zipkin collecter server url"
+    example:  http://xx.xx.xx
+    default: http://127.0.0.1:9441
+
+  cf.firehose.endpoint:
+    description:
+      "firehose url"
+  
+  cf.firehose.authToken:
+    description:
+      "oauth bearer for firehose client"
+  
+  cf.firehose.skipTlsValidation:
+    description:
+      "should skip TLS validation to access firehose"
+    default: false
+  
+  crate.host:
+      description:
+        "influx db host"
+  crate.port:
+      description:
+        "influx db port"
+  crate.database:
+      description:
+        "influx database"
+  crate.username:
+      description:
+        "influx username"
+  crate.password:  
+      description:
+        "influx password"
+  

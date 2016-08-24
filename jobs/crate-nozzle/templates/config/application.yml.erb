@@ -1,0 +1,35 @@
+---
+logging:
+  level: DEBUG
+
+management:
+  context-path: /admin    
+
+spring:
+  sleuth:
+    sampler:
+      percentage: <%= p('zipkin.sampler-percentage') %>
+  zipkin:
+    enabled: <%= p('zipkin.enabled') %>
+    base-url: <%= p('zipkin.base-url') %> 
+
+admin:
+  user:  <%= p('admin.user') %>
+  password: <%= p('admin.password') %>     
+
+cf:
+  firehose:
+    enabled: true
+    endpoint:  <%= p('cf.firehose.endpoint') %>
+    authToken: <%= p('cf.firehose.authToken') %>
+    skipTlsValidation: <%= p('cf.firehose.skipTlsValidation') %>
+
+
+  
+crate:
+  host: <%= p('crate.host') %>
+  port: <%= p('crate.port') %>
+  database: <%= p('crate.database') %>
+  username: <%= p('crate.username') %>
+  password: <%= p('crate.password') %>  
+  
