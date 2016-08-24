@@ -61,10 +61,4 @@ properties:
   crate.database:
       description:
         "influx database"
-  crate.username:
-      description:
-        "influx username"
-  crate.password:  
-      description:
-        "influx password"
   
