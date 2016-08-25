@@ -1,5 +1,23 @@
 # BOSH Release for firehose-connectors
 
+
+## Purpose
+The purpose of this bosh release is to offer different firehoze nozzles, to collect metrics and events from a cloudfoundry deployment to differents backend
+
+
+The following backends are supported :
+
+* influxdb: Tested with https://github.com/vito/influxdb-boshrelease 
+
+* crate.io: Tested with https://github.com/cloudfoundry-community/crate-boshrelease/releases/tag/v2
+
+The connector leverages the following components:
+* Spring Boot
+* Snotel: https://github.com/cloudfoundry-community/snotel 
+* Spring Data Crate: https://github.com/crate/spring-data-crate
+
+
+
 ## Usage
 
 To use this bosh release, first upload it to your bosh:
