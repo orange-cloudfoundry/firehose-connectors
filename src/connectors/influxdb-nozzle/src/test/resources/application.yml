@@ -21,3 +21,12 @@ spring:
 admin:
   user: admin
   password: xxxx    
+  
+  
+influxdb:
+  host: 192.168.111.110
+  port: 8086
+  database: influxdb
+  username: influx
+  password: influx1234  
+  
