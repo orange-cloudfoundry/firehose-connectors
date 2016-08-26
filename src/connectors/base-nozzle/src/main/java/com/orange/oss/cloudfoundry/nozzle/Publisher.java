@@ -1,4 +1,4 @@
-package com.orange.oss.cloudfoundry.nozzle.config;
+package com.orange.oss.cloudfoundry.nozzle;
 
 import org.cloudfoundry.dropsonde.events.Envelope;
 

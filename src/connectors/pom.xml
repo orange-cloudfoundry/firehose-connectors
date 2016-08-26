@@ -9,6 +9,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>base-nozzle</module>
+		<module>cf-api-connector</module>
  		<module>crate-nozzle</module>
 		<module>influxdb-nozzle</module>
         <module>spring-data-crate</module>
