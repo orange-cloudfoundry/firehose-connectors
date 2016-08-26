@@ -1,0 +1,13 @@
+set -e
+
+. common/setup-java-prepackaging.sh
+
+cd ${BUILD_DIR}/connectors
+./mvnw -B -e clean install -DskipTests=true
+mv cf-api-connector/target/cf-api-connector-0.1-SNAPSHOT.jar ${BUILD_DIR}/cf-api-connector.jar 
+
+cd ${BUILD_DIR}
+rm -rf connectors
+
+cleanup_java
+

@@ -1,0 +1,5 @@
+check process cf-api-connector
+  with pidfile /var/vcap/sys/run/cf-api-connector/cf-api-connector.pid
+  start program "/var/vcap/jobs/cf-api-connector/bin/monit_debugger cf-api-connector_ctl '/var/vcap/jobs/cf-api-connector/bin/ctl start'"
+  stop program "/var/vcap/jobs/cf-api-connector/bin/monit_debugger cf-api-connector_ctl '/var/vcap/jobs/cf-api-connector/bin/ctl stop'"
+  group vcap

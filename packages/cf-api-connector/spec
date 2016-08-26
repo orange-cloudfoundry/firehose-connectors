@@ -1,0 +1,7 @@
+---
+name: cf-api-connector
+dependencies: []
+files:
+- connectors/**/*
+- openjdk/*
+- common/setup-java-prepackaging.sh
