@@ -18,9 +18,8 @@ admin:
   password: <%= p('admin.password') %>     
 
 cf:
-  firehose:
-    enabled: true
-    endpoint:  <%= p('cf.firehose.endpoint') %>
-    authToken: <%= p('cf.firehose.authToken') %>
-    skipTlsValidation: <%= p('cf.firehose.skipTlsValidation') %>
-
+  apiHost: <%= p('cf.apiHost') %>
+  username: <%= p('cf.username') %>
+  password: <%= p('cf.password') %>
+  skipTlsValidation: <%= p('cf.skipTlsValidation') %>
+  

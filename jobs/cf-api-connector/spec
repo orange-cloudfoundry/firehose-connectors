@@ -39,26 +39,21 @@ properties:
     example:  http://xx.xx.xx
     default: http://127.0.0.1:9441
 
-  cf.firehose.endpoint:
+  cf.apiHost:
     description:
-      "firehose url"
+      "cf api host"
   
-  cf.firehose.authToken:
+  cf.username:
     description:
-      "oauth bearer for firehose client"
+      "cf api user"
   
-  cf.firehose.skipTlsValidation:
+  
+  cf.password:
     description:
-      "should skip TLS validation to access firehose"
+      "cf api password"
+  
+  cf.skipTlsValidation:
+    description:
+      "should skip TLS validation to access cf api"
     default: false
-  
-  crate.host:
-      description:
-        "influx db host"
-  crate.port:
-      description:
-        "influx db port"
-  crate.database:
-      description:
-        "influx database"
   
