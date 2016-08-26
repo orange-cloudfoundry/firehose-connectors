@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.orange.oss.cloudfoundry.nozzle.Publisher;
+
 @Component
 public class CratePublisher implements Publisher {
 	

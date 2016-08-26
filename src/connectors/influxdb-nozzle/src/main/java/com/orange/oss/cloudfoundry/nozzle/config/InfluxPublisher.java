@@ -5,19 +5,22 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
 
 import org.cloudfoundry.dropsonde.events.Envelope;
+import org.cloudfoundry.dropsonde.events.Envelope.EventType;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDB.ConsistencyLevel;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
+import org.influxdb.dto.Point.Builder;
 import org.influxdb.dto.Query;
+import org.influxdb.dto.QueryResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.arjuna.ats.internal.arjuna.objectstore.jdbc.drivers.oracle_driver;
+import com.orange.oss.cloudfoundry.nozzle.Publisher;
 
 @Component
 public class InfluxPublisher implements Publisher {
@@ -72,15 +75,51 @@ public class InfluxPublisher implements Publisher {
 		                .retentionPolicy("default")
 		                .consistency(ConsistencyLevel.ALL)
 		                .build();
-		Point point = Point.measurement("firehose")
-		                    .time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
-		                    .addField("origin", env.origin)
-		                    .addField("deployment", env.deployment)
-		                    .addField("job", env.job)
-		                    .addField("index", env.index)
-		                    .addField("ip", env.ip)
-		                    .addField("timestamp", env.timestamp)
-		                    .build();
+		
+		Builder builder = Point.measurement("firehose");
+		
+        builder.time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
+        .addField("origin", env.origin)
+        .addField("eventType",env.eventType.toString())
+        .addField("deployment", env.deployment)
+        .addField("job", env.job)
+        .addField("index", env.index)
+        .addField("ip", env.ip);
+		
+		EventType eventType=env.eventType;
+		switch (eventType){
+		case ContainerMetric:
+			break;
+		case CounterEvent:
+			break;
+		case Error:
+			break;
+		case HttpStart:
+			break;
+		case HttpStartStop:
+			break;
+		case HttpStop:
+			break;
+		case LogMessage:
+			break;
+		case ValueMetric: {
+			String metricName=env.valueMetric.name;
+			String metricUnit=env.valueMetric.unit;
+			Double metricValue=env.valueMetric.value;
+			
+            builder.addField("metricName",metricName);
+            builder.addField("metricUnit",metricUnit);
+            builder.addField("metricValue",metricValue);
+            builder.addField("timestamp", env.timestamp);
+		}
+			break;
+		default:
+			break;
+		}
+		
+		
+		
+        Point point=builder.build();
 		batchPoints.point(point);
 		influxDB.write(batchPoints);
 		
@@ -89,7 +128,7 @@ public class InfluxPublisher implements Publisher {
 	@Scheduled(fixedDelay=10000)
 	public void queryPingInflux(){
 		Query query = new Query("SELECT idle FROM cpu", this.database);
-		influxDB.query(query);
+		QueryResult result = influxDB.query(query);
 	}
 	
 
