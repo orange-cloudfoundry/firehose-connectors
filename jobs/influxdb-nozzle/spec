@@ -43,9 +43,6 @@ properties:
     description:
       "firehose url"
   
-  cf.firehose.authToken:
-    description:
-      "oauth bearer for firehose client"
   
   cf.firehose.skipTlsValidation:
     description:
