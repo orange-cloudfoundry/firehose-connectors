@@ -25,7 +25,9 @@ public class CFOauthTokenTest {
 	
 	@Test
 	public void testGetBearer(){
-		String bearer=client.bearerToken();
+		String token=client.authToken();
+		logger.info("token is {}",token);
+		
 		
 		
 	}

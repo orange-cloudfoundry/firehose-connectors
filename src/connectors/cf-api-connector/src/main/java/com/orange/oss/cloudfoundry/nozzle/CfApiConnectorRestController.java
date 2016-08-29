@@ -18,12 +18,12 @@ public class CfApiConnectorRestController {
 	@Autowired
 	CfClient client;
 	
-	@RequestMapping(method=RequestMethod.GET,value = "/bearer",produces="application/text")
+	@RequestMapping(method=RequestMethod.GET,value = "/auth-token",produces="application/text")
 	@ResponseBody
-	public String fetchBearer() {
-		logger.debug("bearer fetch request");
-		String bearer=client.bearerToken();
-		logger.debug("bearer is {}",bearer);
-		return bearer;
+	public String fetchAuthToken() {
+		logger.debug("fetch token request");
+		String token=client.authToken();
+		logger.debug("token is {}",token);
+		return token;
 	}		
 }
