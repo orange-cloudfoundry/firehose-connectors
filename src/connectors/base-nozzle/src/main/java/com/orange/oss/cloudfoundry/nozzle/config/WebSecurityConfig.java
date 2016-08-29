@@ -17,10 +17,6 @@ public class WebSecurityConfig {
     private String adminUser;
     @Value("${admin.password}")
     private String adminPassword;
-	
-	
-
-    
     
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -47,6 +43,25 @@ public class WebSecurityConfig {
         }
     }
     
-    
+
+    @Configuration
+    @Order(2)
+    public static class CfApiConnectorSecurity extends WebSecurityConfigurerAdapter {
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .antMatcher("/cf-api-connector/**")
+                    .authorizeRequests()
+                    .anyRequest()
+                    .anonymous()
+//                    .hasRole("ADMIN")
+//                    .and()
+//                    .httpBasic()
+                    .and()
+                    .csrf().disable();
+        }
+    }
+
     
 }
