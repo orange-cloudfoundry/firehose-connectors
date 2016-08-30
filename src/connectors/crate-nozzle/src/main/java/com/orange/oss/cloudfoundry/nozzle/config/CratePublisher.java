@@ -52,17 +52,23 @@ public class CratePublisher implements Publisher {
 	
 	@Override
 	public void publishNozzleToConnector(Envelope env){
-
+		
 		CrateEnvelope e = new CrateEnvelope();
 		e.setDeployment(env.deployment);
 		e.setEventType(env.eventType.toString());
-		e.setIndex(env.index);
+		e.setIdx(env.index);
 		e.setIp(env.ip);
 		e.setJob(env.job);
+//		e.setHttpStart(env.httpStart.);
+//		e.setHttpStop(env.httpStop);
+//		e.setHttpStartStop(env.httpStartStop);
 
-//		e.setMetricName(env.valueMetric.name);
-//		e.setMetricUnit(env.valueMetric.unit);
-//		e.setMetricValue(env.valueMetric.value);
+		if (env.valueMetric!=null){
+		e.setMetricName(env.valueMetric.name);
+		e.setMetricUnit(env.valueMetric.unit);
+		e.setMetricValue(env.valueMetric.value);
+		}
+		
 		e.setOrigin(env.origin);
 		e.setTimestamp(env.timestamp);
 		

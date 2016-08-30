@@ -28,12 +28,39 @@ public class CrateEnvelope {
 	private String eventType;
 	private String deployment;
 	private String job;
-	private String index;
+	private String idx;
 	private String ip;
 	private String metricName;
 	private String metricUnit;
 	private double metricValue;
 	private long timestamp;
+	private long httpStart;
+	private long httpStop;
+	private long httpStartStop;
+
+	public long getHttpStart() {
+		return httpStart;
+	}
+
+	public void setHttpStart(long httpStart) {
+		this.httpStart = httpStart;
+	}
+
+	public long getHttpStop() {
+		return httpStop;
+	}
+
+	public void setHttpStop(long httpStop) {
+		this.httpStop = httpStop;
+	}
+
+	public long getHttpStartStop() {
+		return httpStartStop;
+	}
+
+	public void setHttpStartStop(long httpStartStop) {
+		this.httpStartStop = httpStartStop;
+	}
 
 	public String getOrigin() {
 		return origin;
@@ -67,12 +94,13 @@ public class CrateEnvelope {
 		this.job = job;
 	}
 
-	public String getIndex() {
-		return index;
+
+	public String getIdx() {
+		return idx;
 	}
 
-	public void setIndex(String index) {
-		this.index = index;
+	public void setIdx(String idx) {
+		this.idx = idx;
 	}
 
 	public String getIp() {
