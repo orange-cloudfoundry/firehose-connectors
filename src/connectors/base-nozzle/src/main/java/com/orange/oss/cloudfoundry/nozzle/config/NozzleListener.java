@@ -10,6 +10,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import com.orange.oss.cloudfoundry.nozzle.CfApiConnectorClient;
 import com.orange.oss.cloudfoundry.nozzle.Publisher;
 
+import io.netty.handler.codec.http.websocketx.WebSocketHandshakeException;
+
 import cf.dropsonde.firehose.Firehose;
 import rx.Observable;
 
@@ -42,8 +44,16 @@ public class NozzleListener {
 		Observable<Envelope> observable = firehose.open();
 		//Assert.isTrue(firehose.isConnected(),"not connected to Firehose");
 		
-        observable.toBlocking()
+		try {
+        observable
+        .toBlocking()
         .forEach(envelope -> {logger.info(envelope.toString()); this.publisher.publishNozzleToConnector(envelope);});
+		} catch (WebSocketHandshakeException e){
+			logger.error("rejected Firehose auth token", e);
+			logger.error("===> TERMINATING nozzle instance");
+			System.exit(-1);
+			
+		}
 	}
 	
 	
