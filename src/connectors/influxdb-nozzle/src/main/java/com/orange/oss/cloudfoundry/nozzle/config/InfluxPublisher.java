@@ -24,74 +24,54 @@ import com.orange.oss.cloudfoundry.nozzle.Publisher;
 
 @Component
 public class InfluxPublisher implements Publisher {
-	
-	private static Logger logger=LoggerFactory.getLogger(InfluxPublisher.class.getName());
-	
-	
+
+	private static Logger logger = LoggerFactory.getLogger(InfluxPublisher.class.getName());
+
 	@Value("${influxdb.database}")
 	private String database;
 
-	@Value("${influxdb.host}")	
+	@Value("${influxdb.host}")
 	private String host;
-	
-	@Value("${influxdb.port}")	
+
+	@Value("${influxdb.port}")
 	private int port;
-	
-	@Value("${influxdb.username}")	
+
+	@Value("${influxdb.username}")
 	private String username;
-	
-	@Value("${influxdb.password}")	
+
+	@Value("${influxdb.password}")
 	private String password;
-	
+
 	private InfluxDB influxDB;
 
-	
 	/**
 	 * publish events to backend
+	 * 
 	 * @param env
 	 */
-	
-	public InfluxPublisher(){
+
+	public InfluxPublisher() {
 
 	}
-	
-	
+
 	@PostConstruct
-	public void init(){
-		this.influxDB = InfluxDBFactory.connect("http://"+this.host+":"+this.port, this.username, this.password);
+	public void init() {
+		this.influxDB = InfluxDBFactory.connect("http://" + this.host + ":" + this.port, this.username, this.password);
 		influxDB.createDatabase(this.database);
 
 	}
-	
-	
-	/* (non-Javadoc)
-	 * @see com.orange.oss.cloudfoundry.nozzle.config.Publisher#publishNozzleToConnector(org.cloudfoundry.dropsonde.events.Envelope)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.orange.oss.cloudfoundry.nozzle.config.Publisher#
+	 * publishNozzleToConnector(org.cloudfoundry.dropsonde.events.Envelope)
 	 */
 	@Override
-	public void publishNozzleToConnector(Envelope env){
-		BatchPoints batchPoints = BatchPoints
-		                .database(this.database)
-		                .tag("async", "true")
-		                .retentionPolicy("default")
-		                .consistency(ConsistencyLevel.ALL)
-		                .build();
-		
-		Builder builder = Point.measurement("firehose");
-		
-        builder.time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
-        .addField("origin", env.origin)
-        .addField("eventType",env.eventType.toString())
-        .addField("deployment", env.deployment)
-        .addField("job", env.job)
-        .addField("index", env.index)
-        .addField("ip", env.ip);
-		
-		EventType eventType=env.eventType;
-		switch (eventType){
-		case ContainerMetric:
-			break;
-		case CounterEvent:
-			break;
+	public void publishNozzleToConnector(Envelope env) {
+
+		EventType eventType = env.eventType;
+		switch (eventType) {
 		case Error:
 			break;
 		case HttpStart:
@@ -102,34 +82,50 @@ public class InfluxPublisher implements Publisher {
 			break;
 		case LogMessage:
 			break;
+
+		case CounterEvent:
+			break;
+
+		case ContainerMetric: {
+			saveMetric(env);			
+			break;}
 		case ValueMetric: {
-			String metricName=env.valueMetric.name;
-			String metricUnit=env.valueMetric.unit;
-			Double metricValue=env.valueMetric.value;
-			
-            builder.addField("metricName",metricName);
-            builder.addField("metricUnit",metricUnit);
-            builder.addField("metricValue",metricValue);
-            builder.addField("timestamp", env.timestamp);
-		}
-			break;
+			saveMetric(env);
+			break;}
 		default:
+			logger.error("unknow even type!");
 			break;
 		}
+
+	}
+
+	private void saveMetric(Envelope env) {
+		BatchPoints batchPoints = BatchPoints.database(this.database).tag("async", "true")
+				.retentionPolicy("default").consistency(ConsistencyLevel.ALL).build();
+
+		String metricName = env.valueMetric.name;
+		String metricUnit = env.valueMetric.unit;
+		Double metricValue = env.valueMetric.value;
 		
-		
-		
-        Point point=builder.build();
+		Builder builder = Point.measurement(env.valueMetric.name);
+
+		builder.time(env.timestamp, TimeUnit.MILLISECONDS)
+			.addField("origin", env.origin)
+			.addField("eventType", env.eventType.toString()).addField("deployment", env.deployment)
+			.addField("job", env.job).addField("index", env.index).addField("ip", env.ip);
+		builder.addField("metricName", metricName);
+		builder.addField("metricUnit", metricUnit);
+		builder.addField("metricValue", metricValue);
+		Point point = builder.build();
 		batchPoints.point(point);
 		influxDB.write(batchPoints);
-		
 	}
+
 	
-	@Scheduled(fixedDelay=10000)
-	public void queryPingInflux(){
+	@Scheduled(fixedDelay = 10000)
+	public void queryPingInflux() {
 		Query query = new Query("SELECT idle FROM cpu", this.database);
 		QueryResult result = influxDB.query(query);
 	}
-	
 
 }

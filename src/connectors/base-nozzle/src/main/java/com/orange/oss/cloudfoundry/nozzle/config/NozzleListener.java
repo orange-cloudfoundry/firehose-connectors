@@ -1,6 +1,7 @@
 package com.orange.oss.cloudfoundry.nozzle.config;
 
 import org.cloudfoundry.dropsonde.events.Envelope;
+import org.cloudfoundry.dropsonde.events.Envelope.EventType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +48,30 @@ public class NozzleListener {
 		try {
         observable
         .toBlocking()
-        .forEach(envelope -> {logger.info(envelope.toString()); this.publisher.publishNozzleToConnector(envelope);});
+        .forEach(envelope -> {readEnvelope(envelope);});
 		} catch (WebSocketHandshakeException e){
 			logger.error("rejected Firehose auth token", e);
 			logger.error("===> TERMINATING nozzle instance");
 			System.exit(-1);
 			
 		}
+	}
+	/**
+	 * envelope processing
+	 * @param envelope
+	 */
+	private void readEnvelope(Envelope envelope) {
+		logger.info(envelope.toString());
+//		if ((EventType.CounterEvent.toString().equals(envelope.eventType))
+//			&& ("TruncatingBuffer.DroppedMessages".equals(envelope.valueMetric.name))
+//			&& ("doppler".equals(envelope.origin))
+//			){
+//			Double value=envelope.valueMetric.value;
+//			logger.warn("====> doppler dropped messages: {}",value);
+//		}
+		
+		
+		this.publisher.publishNozzleToConnector(envelope);
 	}
 	
 	
