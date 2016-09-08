@@ -13,6 +13,12 @@ public class MockPublisher implements Publisher{
 	@Override
 	public void publishNozzleToConnector(Envelope env) {
 		logger.info("got Envelope : {}",env);
+		
+		//slow down nozzle to observe dopplet dropped mess 
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+		}
 	}
 
 }

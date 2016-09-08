@@ -4,57 +4,58 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.orange.oss.cloudfoundry.nozzle</groupId>
-	<artifactId>base-nozzle</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>syslog-org-nozzle</artifactId>
+	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>base-nozzle</name>
-	<description>firehose nozzle</description>
+	<name>Firehose nozzle to syslog</name>
+	<description>Firehose nozzle to syslog</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.0.RELEASE</version>
+		<version>1.3.6.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<java.version>1.8</java.version>		
 	</properties>
+
+
+	
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
+			<groupId>com.orange.oss.cloudfoundry.nozzle</groupId>
+			<artifactId>base-nozzle</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-sleuth</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.cloudfoundry-community</groupId>
-			<artifactId>snotel-spring-boot-starter</artifactId>
-			<version>0.4</version>
-		</dependency>
-
+	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
+
+		
+	<!-- https://mvnrepository.com/artifact/com.cloudbees/syslog-java-client -->
+	<dependency>
+	    <groupId>com.cloudbees</groupId>
+	    <artifactId>syslog-java-client</artifactId>
+	    <version>1.0.8</version>
+	</dependency>
+
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -65,9 +66,10 @@
 				<scope>import</scope>
 			</dependency>
 			
+			
 		</dependencies>
 	</dependencyManagement>
 
-	
+
 
 </project>

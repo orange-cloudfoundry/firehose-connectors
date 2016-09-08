@@ -13,25 +13,16 @@ import org.springframework.stereotype.Component;
 import com.orange.oss.cloudfoundry.nozzle.Publisher;
 
 @Component
-public class CratePublisher implements Publisher {
+public class SyslogPublisher implements Publisher {
 	
-	private static Logger logger=LoggerFactory.getLogger(CratePublisher.class.getName());
-	
-	
-	@Value("${crate.database}")
-	private String database;
+	private static Logger logger=LoggerFactory.getLogger(SyslogPublisher.class.getName());
 
-	@Value("${crate.host}")	
+	@Value("${syslog.host}")	
 	private String host;
 	
-	@Value("${crate.port}")	
+	@Value("${syslog.port}")	
 	private int port;
 	
-	
-	
-	@Autowired
-	EnvelopeRepository repository;
-
 
 	
 	/**
@@ -39,7 +30,7 @@ public class CratePublisher implements Publisher {
 	 * @param env
 	 */
 	
-	public CratePublisher(){
+	public SyslogPublisher(){
 
 	}
 	
