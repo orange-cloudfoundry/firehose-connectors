@@ -1,15 +1,22 @@
 package com.orange.oss.cloudfoundry.nozzle.config;
 
+import java.io.IOException;
+
 import javax.annotation.PostConstruct;
 
 import org.cloudfoundry.dropsonde.events.Envelope;
 import org.cloudfoundry.dropsonde.events.Envelope.EventType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.cloudbees.syslog.Facility;
+import com.cloudbees.syslog.MessageFormat;
+import com.cloudbees.syslog.Severity;
+import com.cloudbees.syslog.sender.AbstractSyslogMessageSender;
+import com.cloudbees.syslog.sender.TcpSyslogMessageSender;
+import com.cloudbees.syslog.sender.UdpSyslogMessageSender;
 import com.orange.oss.cloudfoundry.nozzle.Publisher;
 
 @Component
@@ -22,6 +29,11 @@ public class SyslogPublisher implements Publisher {
 	
 	@Value("${syslog.port}")	
 	private int port;
+	
+	@Value("${syslog.tcp}")
+	boolean tcp;
+	
+	private AbstractSyslogMessageSender messageSender;
 	
 
 	
@@ -37,28 +49,33 @@ public class SyslogPublisher implements Publisher {
 	
 	@PostConstruct
 	public void init(){
-
+		if (tcp){
+			TcpSyslogMessageSender messageSender=new TcpSyslogMessageSender();
+			//messageSender.setDefaultMessageHostName("myhostname"); // some syslog cloud services may use this field to transmit a secret key
+			messageSender.setDefaultAppName("myapp");
+			messageSender.setDefaultFacility(Facility.USER);
+			messageSender.setDefaultSeverity(Severity.INFORMATIONAL);
+			messageSender.setSyslogServerHostname(this.host);
+			messageSender.setSyslogServerPort(this.port);
+			messageSender.setMessageFormat(MessageFormat.RFC_3164); // optional, default is RFC 3164
+			this.messageSender=messageSender;
+		}else {
+			UdpSyslogMessageSender messageSender=new UdpSyslogMessageSender();
+			//messageSender.setDefaultMessageHostName("myhostname"); // some syslog cloud services may use this field to transmit a secret key
+			messageSender.setDefaultAppName("myapp");
+			messageSender.setDefaultFacility(Facility.USER);
+			messageSender.setDefaultSeverity(Severity.INFORMATIONAL);
+			messageSender.setSyslogServerHostname(this.host);
+			messageSender.setSyslogServerPort(this.port);
+			messageSender.setMessageFormat(MessageFormat.RFC_3164); // optional, default is RFC 3164
+			this.messageSender=messageSender;
+		}
+		
 	}
 	
 	
 	@Override
 	public void publishNozzleToConnector(Envelope env){
-		
-		CrateEnvelope e = new CrateEnvelope();
-		e.setDeployment(env.deployment);
-		e.setEventType(env.eventType.toString());
-		e.setIdx(env.index);
-		e.setIp(env.ip);
-		e.setJob(env.job);
-
-		if (env.valueMetric!=null){
-		e.setMetricName(env.valueMetric.name);
-		e.setMetricUnit(env.valueMetric.unit);
-		e.setMetricValue(env.valueMetric.value);
-		}
-		
-		e.setOrigin(env.origin);
-		e.setTimestamp(env.timestamp);
 		
 		EventType eventType=env.eventType;
 		switch (eventType){
@@ -74,34 +91,22 @@ public class SyslogPublisher implements Publisher {
 			break;
 		case HttpStop:
 			break;
-		case LogMessage:
-			break;
-		case ValueMetric: {
-			String metricName=env.valueMetric.name;
-			String metricUnit=env.valueMetric.unit;
-			Double metricValue=env.valueMetric.value;
+		case LogMessage:{
+			// send a Syslog message
 			
-//            builder.addField("metricName",metricName);
-//            builder.addField("metricUnit",metricUnit);
-//            builder.addField("metricValue",metricValue);
-//            builder.addField("timestamp", env.timestamp);
+			try {
+				this.messageSender.sendMessage(env.logMessage.message.toString());
+			} catch (IOException e) {
+				logger.error("Failure sending log. {}",e);
+			}
 		}
+			break;
+		case ValueMetric:
 			break;
 		default:
 			break;
 		}
-		
-		
-		this.repository.save(e);
-		
-		
 	}
 	
-//	@Scheduled(fixedDelay=10000)
-//	public void queryPingInflux(){
-//		Query query = new Query("SELECT idle FROM cpu", this.database);
-//		QueryResult result = influxDB.query(query);
-//	}
 	
-
 }
