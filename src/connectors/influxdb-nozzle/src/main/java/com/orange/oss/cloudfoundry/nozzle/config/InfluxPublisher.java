@@ -131,6 +131,8 @@ public class InfluxPublisher implements Publisher {
 		Point point = builder.build();
 		batchPoints.point(point);
 		influxDB.write(batchPoints);
+		
+		logger.debug("save point {}", point);
 	}
 
 	

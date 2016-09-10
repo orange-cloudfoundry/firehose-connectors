@@ -1,7 +1,6 @@
 package com.orange.oss.cloudfoundry.nozzle.config;
 
 import org.cloudfoundry.dropsonde.events.Envelope;
-import org.cloudfoundry.dropsonde.events.Envelope.EventType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +10,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import com.orange.oss.cloudfoundry.nozzle.CfApiConnectorClient;
 import com.orange.oss.cloudfoundry.nozzle.Publisher;
 
-import io.netty.handler.codec.http.websocketx.WebSocketHandshakeException;
-
 import cf.dropsonde.firehose.Firehose;
+import io.netty.handler.codec.http.websocketx.WebSocketHandshakeException;
 import rx.Observable;
 
 @Configuration
@@ -61,7 +59,7 @@ public class NozzleListener {
 	 * @param envelope
 	 */
 	private void readEnvelope(Envelope envelope) {
-		logger.info(envelope.toString());
+		logger.debug(envelope.toString());
 //		if ((EventType.CounterEvent.toString().equals(envelope.eventType))
 //			&& ("TruncatingBuffer.DroppedMessages".equals(envelope.valueMetric.name))
 //			&& ("doppler".equals(envelope.origin))
