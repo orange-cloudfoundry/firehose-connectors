@@ -76,7 +76,7 @@ public class InfluxPublisher implements Publisher {
 			break;
 		case HttpStart:
 			break;
-		case HttpStartStop:
+		case HttpStartStop: //deprecated
 			break;
 		case HttpStop:
 			break;
@@ -87,10 +87,10 @@ public class InfluxPublisher implements Publisher {
 			break;
 
 		case ContainerMetric: {
-			saveMetric(env);			
+			saveContainerMetric(env);			
 			break;}
 		case ValueMetric: {
-			saveMetric(env);
+			//saveContainerMetric(env);
 			break;}
 		default:
 			logger.error("unknow even type!");
@@ -98,8 +98,11 @@ public class InfluxPublisher implements Publisher {
 		}
 
 	}
-
-	private void saveMetric(Envelope env) {
+	/**
+	 * save container metric
+	 * @param env
+	 */
+	private void saveContainerMetric(Envelope env) {
 		BatchPoints batchPoints = BatchPoints
 				.database(this.database)
 				.tag("async", "true")
@@ -107,19 +110,21 @@ public class InfluxPublisher implements Publisher {
 				.consistency(ConsistencyLevel.ALL)
 				.build();
 
-		String metricName = env.valueMetric.name;
-		String metricUnit = env.valueMetric.unit;
-		Double metricValue = env.valueMetric.value;
 		
-		Builder builder = Point.measurement(env.valueMetric.name);
+		Builder builder = Point.measurement("containerMetric");
 
 		builder.time(env.timestamp, TimeUnit.MILLISECONDS)
-//			.addField("origin", env.origin)
-//			.addField("eventType", env.eventType.toString()).addField("deployment", env.deployment)
-//			.addField("job", env.job).addField("index", env.index).addField("ip", env.ip)
-//			.addField("metricName", metricName)
-//			.addField("metricUnit", metricUnit)
-			.addField("metricValue", metricValue);
+//			.addField("origin", env.origin) => rep
+//			.addField("eventType", env.eventType.toString()) => containerMetric
+			.addField("deployment", env.deployment)
+			.addField("job", env.job)
+			.addField("index", env.index)
+			.addField("ip", env.ip)
+			.addField("applicationId",env.containerMetric.applicationId)
+			.addField("instanceIndex",env.containerMetric.instanceIndex)
+			.addField("cpuPercentage",env.containerMetric.cpuPercentage)
+			.addField("diskBytes",env.containerMetric.diskBytes)
+			.addField("memoryBytes",env.containerMetric.memoryBytes);
 		
 		Point point = builder.build();
 		batchPoints.point(point);
