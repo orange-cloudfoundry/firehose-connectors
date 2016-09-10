@@ -116,15 +116,17 @@ public class InfluxPublisher implements Publisher {
 		builder.time(env.timestamp, TimeUnit.MILLISECONDS)
 //			.addField("origin", env.origin) => rep
 //			.addField("eventType", env.eventType.toString()) => containerMetric
-			.addField("deployment", env.deployment)
-			.addField("job", env.job)
-			.addField("index", env.index)
-			.addField("ip", env.ip)
-			.addField("applicationId",env.containerMetric.applicationId)
-			.addField("instanceIndex",env.containerMetric.instanceIndex)
+			.tag("deployment", env.deployment)
+			.tag("job", env.job)
+			.tag("index", env.index)
+			.tag("ip", env.ip)
+			.tag("applicationId",env.containerMetric.applicationId)
+			.tag("instanceIndex",env.containerMetric.instanceIndex.toString())
 			.addField("cpuPercentage",env.containerMetric.cpuPercentage)
 			.addField("diskBytes",env.containerMetric.diskBytes)
 			.addField("memoryBytes",env.containerMetric.memoryBytes);
+		
+		
 		
 		Point point = builder.build();
 		batchPoints.point(point);
