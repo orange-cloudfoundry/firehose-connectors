@@ -57,6 +57,7 @@ public class InfluxPublisher implements Publisher {
 	@PostConstruct
 	public void init() {
 		this.influxDB = InfluxDBFactory.connect("http://" + this.host + ":" + this.port, this.username, this.password);
+		logger.info("creating influxdb database {}",this.database);
 		influxDB.createDatabase(this.database);
 
 	}
@@ -90,7 +91,7 @@ public class InfluxPublisher implements Publisher {
 			saveContainerMetric(env);			
 			break;}
 		case ValueMetric: {
-			//saveContainerMetric(env);
+			saveValueMetric(env);
 			break;}
 		default:
 			logger.error("unknow even type!");
@@ -132,9 +133,40 @@ public class InfluxPublisher implements Publisher {
 		batchPoints.point(point);
 		influxDB.write(batchPoints);
 		
-		logger.debug("save point {}", point);
+		logger.debug("save container point {}", point);
 	}
 
+	/**
+	 * save value metric
+	 * @param env
+	 */
+	private void saveValueMetric(Envelope env) {
+		BatchPoints batchPoints = BatchPoints
+				.database(this.database)
+				.tag("async", "true")
+				.retentionPolicy("default")
+				.consistency(ConsistencyLevel.ALL)
+				.build();
+
+		
+		Builder builder = Point.measurement(env.origin);
+
+		builder.time(env.timestamp, TimeUnit.MILLISECONDS)
+			//.tag("origin", env.origin)
+			.tag("deployment", env.deployment)
+			.tag("job", env.job)
+			.tag("index", env.index)
+			.tag("ip", env.ip)
+			.addField(env.valueMetric.name,env.valueMetric.value);
+		
+		Point point = builder.build();
+		batchPoints.point(point);
+		influxDB.write(batchPoints);
+		
+		logger.debug("save value metric point {}", point);
+	}
+
+	
 	
 	@Scheduled(fixedDelay = 10000)
 	public void queryPingInflux() {
