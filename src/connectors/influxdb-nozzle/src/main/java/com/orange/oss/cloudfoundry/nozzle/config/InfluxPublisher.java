@@ -100,8 +100,12 @@ public class InfluxPublisher implements Publisher {
 	}
 
 	private void saveMetric(Envelope env) {
-		BatchPoints batchPoints = BatchPoints.database(this.database).tag("async", "true")
-				.retentionPolicy("default").consistency(ConsistencyLevel.ALL).build();
+		BatchPoints batchPoints = BatchPoints
+				.database(this.database)
+				.tag("async", "true")
+				.retentionPolicy("default")
+				.consistency(ConsistencyLevel.ALL)
+				.build();
 
 		String metricName = env.valueMetric.name;
 		String metricUnit = env.valueMetric.unit;
@@ -110,12 +114,13 @@ public class InfluxPublisher implements Publisher {
 		Builder builder = Point.measurement(env.valueMetric.name);
 
 		builder.time(env.timestamp, TimeUnit.MILLISECONDS)
-			.addField("origin", env.origin)
-			.addField("eventType", env.eventType.toString()).addField("deployment", env.deployment)
-			.addField("job", env.job).addField("index", env.index).addField("ip", env.ip);
-		builder.addField("metricName", metricName);
-		builder.addField("metricUnit", metricUnit);
-		builder.addField("metricValue", metricValue);
+//			.addField("origin", env.origin)
+//			.addField("eventType", env.eventType.toString()).addField("deployment", env.deployment)
+//			.addField("job", env.job).addField("index", env.index).addField("ip", env.ip)
+//			.addField("metricName", metricName)
+//			.addField("metricUnit", metricUnit)
+			.addField("metricValue", metricValue);
+		
 		Point point = builder.build();
 		batchPoints.point(point);
 		influxDB.write(batchPoints);
