@@ -1,0 +1,48 @@
+---
+packages:
+- name: java-common
+  version: '018744938b5a691527c626963211f4ba4b5772bf'
+  fingerprint: '018744938b5a691527c626963211f4ba4b5772bf'
+  sha1: 215530ad9b4f0dfd904d1c62f634c5fa964a7733
+  dependencies: []
+- name: influxdb-connector
+  version: 8d989df90ff926eafcced202d11f38146068503a
+  fingerprint: 8d989df90ff926eafcced202d11f38146068503a
+  sha1: e9a5935eead1b51bc5f1786382dcbfe7733f6318
+  dependencies: []
+- name: cf-api-connector
+  version: 1ef30ee2b81af485d6b1883a10fd74cea8453b5d
+  fingerprint: 1ef30ee2b81af485d6b1883a10fd74cea8453b5d
+  sha1: 866caf2ab7be58f7a54d74702ab0a4f9c48eab2e
+  dependencies: []
+- name: openjdk
+  version: 93c072891062f43e6a7fad1f3232064da90429af
+  fingerprint: 93c072891062f43e6a7fad1f3232064da90429af
+  sha1: 2fa79e260093ce9cc74bb25eb56583638f9bab96
+  dependencies: []
+- name: crate-connector
+  version: a3a2fa15f1538e9268b1e47d9ce6a43f49bd22c0
+  fingerprint: a3a2fa15f1538e9268b1e47d9ce6a43f49bd22c0
+  sha1: 39b8dcf237c17c4aaea6e4f129be3513c2abd1b3
+  dependencies: []
+jobs:
+- name: cf-api-connector
+  version: 6b30e609742b6bcde0cf607c375671667879b0d0
+  fingerprint: 6b30e609742b6bcde0cf607c375671667879b0d0
+  sha1: 2215d0cc6b77a63a35e7dea461f25321dad64590
+- name: influxdb-nozzle
+  version: 6e6ea53f99f160d70ed52d986c499806127ee2d7
+  fingerprint: 6e6ea53f99f160d70ed52d986c499806127ee2d7
+  sha1: 5a57aeffc4024503c59c7a1e311047cd7d0980d5
+- name: crate-nozzle
+  version: 68883cccfc4101421768295a8b393be5d0e075ed
+  fingerprint: 68883cccfc4101421768295a8b393be5d0e075ed
+  sha1: 1b498930f869fea3e52d5634e971f3e7ed221c67
+license:
+  version: 5c088a163f21260775a9f418fa468efaba2fa843
+  fingerprint: 5c088a163f21260775a9f418fa468efaba2fa843
+  sha1: ab666879f31caaf8699e9dd817c16bd78874a136
+commit_hash: 3a78669d
+uncommitted_changes: true
+name: firehose-connectors
+version: '1'
