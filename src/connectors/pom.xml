@@ -10,9 +10,10 @@
 	<modules>
 		<module>base-nozzle</module>
 		<module>cf-api-connector</module>
- 		<module>crate-nozzle</module>
+ 		<!--module>crate-nozzle</module-->
+		<module>crate-nozzle-jdbc</module>
 		<module>influxdb-nozzle</module>
 		<module>syslog-org-nozzle</module>		
-        <module>spring-data-crate</module>
+        <!--module>spring-data-crate</module-->
 	</modules>
 </project>
