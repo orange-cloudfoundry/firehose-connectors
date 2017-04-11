@@ -5,7 +5,9 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+	<groupId>com.orange.oss.cloudfoundry.nozzle</groupId>
     <artifactId>crate-nozzle-jdbc</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -26,7 +28,7 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-            <id>central</id>
+            <id>crate-bintray</id>
             <name>bintray</name>
             <url>http://dl.bintray.com/crate/crate</url>
         </repository>
