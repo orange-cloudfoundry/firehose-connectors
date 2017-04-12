@@ -9,9 +9,25 @@ spring:
   sleuth:
     sampler:
       percentage: <%= p('zipkin.sampler-percentage') %>
+
+    rxjava:
+      schedulers:
+        hook:
+          enabled: false
+
+
   zipkin:
     enabled: <%= p('zipkin.enabled') %>
     base-url: <%= p('zipkin.base-url') %> 
+
+  datasource:
+    driver-class-name: io.crate.client.jdbc.CrateDriver	
+    initialize: true
+    url: jdbc:crate://<%= p('crate.host') %>:<%= p('crate.port') %>/
+#FIXME: should inject and add setSchema on jdbc Connection
+
+
+
 
 admin:
   user:  <%= p('admin.user') %>
@@ -22,15 +38,5 @@ cf:
     enabled: true
     endpoint:  <%= p('cf.firehose.endpoint') %>
     skipTlsValidation: <%= p('cf.firehose.skipTlsValidation') %>
-  
-  
-# Loads SQL scripts schema.sql with
-spring:
-	datasource:
-		driver-class-name: io.crate.client.jdbc.CrateDriver	
-		initialize: true
-		url: jdbc:crate://<%= p('crate.host') %>:<%= p('crate.port') %>/
-	#FIXME: should inject and add setSchema on jdbc Connection
-
   
   
