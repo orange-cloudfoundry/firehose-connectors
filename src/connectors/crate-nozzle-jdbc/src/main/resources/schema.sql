@@ -1,5 +1,4 @@
-DROP TABLE IF EXISTS enveloppe;
-CREATE TABLE enveloppe (
+CREATE TABLE IF NOT EXISTS enveloppe (
   id string,
   origin string,
   eventType string,
@@ -14,4 +13,5 @@ CREATE TABLE enveloppe (
   httpStart int,
   httpStop int,
   httpStartStop int
-);
+)  CLUSTERED BY (id)
+;
