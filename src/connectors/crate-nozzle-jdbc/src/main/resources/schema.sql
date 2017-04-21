@@ -13,5 +13,5 @@ CREATE TABLE IF NOT EXISTS enveloppe (
   httpStart int,
   httpStop int,
   httpStartStop int
-)  CLUSTERED BY (id)
+)  CLUSTERED BY (id) WITH (number_of_replicas = 2)
 ;
